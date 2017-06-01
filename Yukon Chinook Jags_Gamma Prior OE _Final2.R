@@ -108,8 +108,8 @@ prop.Eiler <- 0.427
 
 #Number of Simulations and Thinning Rate:
 sims <-  5e5
-thins <- 250
-chains <- 3
+thins <- 500
+chains <- 5
 
 #Population to Fit:
 # pop <- 'chena'
