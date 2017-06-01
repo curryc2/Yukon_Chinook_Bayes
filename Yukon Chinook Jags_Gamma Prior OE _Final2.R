@@ -107,8 +107,8 @@ n.pops <- length(pops)
 prop.Eiler <- 0.427
 
 #Number of Simulations and Thinning Rate:
-sims <- 2e5#3e5
-thins <- 100#200
+sims <-  5e5
+thins <- 250
 chains <- 3
 
 #Population to Fit:
@@ -119,9 +119,10 @@ run.parallel <- TRUE
 
 #Name of Model:
 # title <- 'TESTcov_SuperFinal_TotalPink_UnifPriorOE(0,5)_Gamma(1,1)_(0,1.5)PriorforBetaZero_ESTpind(2,8)_SlpPrior_N(0,0.5)'
-title <- 'FIXEDsel5_ExtremeSuperFinal_TotalPink_UnifPriorOE(0,5)_Gamma(1,1)_(0,1.5)PriorforBetaZero_ESTpind(2,8)_SlpPrior_N(0,0.5)'
+# title <- 'FIXEDsel5_ExtremeSuperFinal_TotalPink_UnifPriorOE(0,5)_Gamma(1,1)_(0,1.5)PriorforBetaZero_ESTpind(2,8)_SlpPrior_N(0,0.5)'
 # title <- 'SpawnPrior_SuperFinal_TotalPink_UnifPriorOE(0,5)_Gamma(1,1)_(0,1.5)PriorforBetaZero_ESTpind(2,8)_SlpPrior_N(0,0.5)'
 # title <- 'StdSel_SuperFinal_TotalPink_UnifPriorOE(0,5)_Gamma(1,1)_(0,1.5)PriorforBetaZero_ESTpind(2,8)_SlpPrior_N(0,0.5)'
+title <- 'FINAL'
 
 model <- paste(title,' sims_',sims,' thins_',thins, sep='')
 
@@ -511,18 +512,18 @@ wrapper_func <- function(pop, sims=sims, thins=thins, model=model, run.parallel=
     }#next y
 
     #INDEPENDENT SELECTIVITY ORIGINAL
-    for(a in 1:n.o.stages) {
-     temp_sel_bycatch[a] ~ dunif(0,1)
-    }#next a
-    
-    for(a in 1:n.o.stages) {
-      sel_bycatch[a] <- temp_sel_bycatch[a]/max(temp_sel_bycatch)
-    }
-    #FIX 5 SELECTIVITY equal to 4
-    # for(a in 1:(n.o.stages-1)) {
-    #   sel_bycatch[a] ~ dunif(0,1)
+    # for(a in 1:n.o.stages) {
+    #  temp_sel_bycatch[a] ~ dunif(0,1)
     # }#next a
-    # sel_bycatch[n.o.stages] <- sel_bycatch[n.o.stages-1]
+    # 
+    # for(a in 1:n.o.stages) {
+    #   sel_bycatch[a] <- temp_sel_bycatch[a]/max(temp_sel_bycatch)
+    # }
+    #FIX 5 SELECTIVITY equal to 4
+    for(a in 1:(n.o.stages-1)) {
+      sel_bycatch[a] ~ dunif(0,1)
+    }#next a
+    sel_bycatch[n.o.stages] <- sel_bycatch[n.o.stages-1]
     
     #LOGISTIC SELECTIVITY
     
